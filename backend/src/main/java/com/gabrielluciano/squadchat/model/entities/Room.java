@@ -1,21 +1,19 @@
-package com.gabrielluciano.squadchat.model;
+package com.gabrielluciano.squadchat.model.entities;
 
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class User {
+public class Room {
 
     private UUID id;
-    private String username;
-    private String password;
+    private String name;
     private Instant createdAt;
-    private String avatarUrl;
 
-    private Set<Server> servers = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
-    public User() {
+    public Room() {
         id = UUID.randomUUID();
     }
 
@@ -27,20 +25,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Instant getCreatedAt() {
@@ -51,20 +41,20 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
-    public Set<Server> getServers() {
-        return servers;
+    public boolean addUser(User user) {
+        return users.add(user);
     }
 
-    public void setServers(Set<Server> servers) {
-        this.servers = servers;
+    public boolean removeUser(User user) {
+        return users.remove(user);
     }
 
     @Override
@@ -72,7 +62,6 @@ public class User {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((username == null) ? 0 : username.hashCode());
         return result;
     }
 
@@ -84,16 +73,11 @@ public class User {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        User other = (User) obj;
+        Room other = (Room) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
-            return false;
-        if (username == null) {
-            if (other.username != null)
-                return false;
-        } else if (!username.equals(other.username))
             return false;
         return true;
     }

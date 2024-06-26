@@ -1,4 +1,4 @@
-package com.gabrielluciano.squadchat.model;
+package com.gabrielluciano.squadchat.model.entities;
 
 import com.gabrielluciano.squadchat.model.snowflake.Snowflake;
 
