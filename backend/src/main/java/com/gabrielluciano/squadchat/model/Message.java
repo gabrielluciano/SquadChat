@@ -1,5 +1,7 @@
 package com.gabrielluciano.squadchat.model;
 
+import com.gabrielluciano.squadchat.model.snowflake.Snowflake;
+
 public class Message implements Comparable<Message> {
 
     private Snowflake id;
