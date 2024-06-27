@@ -1,8 +1,9 @@
 package com.gabrielluciano.squadchat.model.snowflake;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-public interface Snowflake extends Comparable<Snowflake> {
+public interface Snowflake extends Comparable<Snowflake>, Serializable {
 
     Instant getInstant();
 

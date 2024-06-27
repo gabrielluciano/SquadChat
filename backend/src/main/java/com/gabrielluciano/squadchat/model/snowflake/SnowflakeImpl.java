@@ -3,6 +3,7 @@ package com.gabrielluciano.squadchat.model.snowflake;
 import java.time.Instant;
 
 public class SnowflakeImpl implements Snowflake {
+    private static final long serialVersionUID = 1L;
 
     private static final long MACHINE_SEQUENCE_NUMBER_MASK = 0b111111111111L;
     private static final long MACHINE_ID_MASK = 0b1111111111L;

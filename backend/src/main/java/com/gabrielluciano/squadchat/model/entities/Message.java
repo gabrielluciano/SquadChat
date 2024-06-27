@@ -1,8 +1,11 @@
 package com.gabrielluciano.squadchat.model.entities;
 
+import java.io.Serializable;
+
 import com.gabrielluciano.squadchat.model.snowflake.Snowflake;
 
-public class Message implements Comparable<Message> {
+public class Message implements Comparable<Message>, Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Snowflake id;
     private String content;
