@@ -44,7 +44,7 @@ class SnowflakeIdGeneratorTest {
 
         assertThat(earlierSnowflake.getMachineId()).isEqualTo(1L);
         assertThat(earlierSnowflake.getInstant()).isEqualTo(laterSnowflake.getInstant());
-        assertThat(earlierSnowflake.getSequenceNumber()).isEqualTo(0);
+        assertThat(earlierSnowflake.getSequenceNumber()).isZero();
         assertThat(laterSnowflake.getSequenceNumber()).isEqualTo(1);
     }
 
@@ -59,8 +59,8 @@ class SnowflakeIdGeneratorTest {
         Snowflake laterSnowflake = snowflakeIdGenerator.generateId();
 
         assertThat(earlierSnowflake.getInstant()).isNotEqualTo(laterSnowflake.getInstant());
-        assertThat(earlierSnowflake.getSequenceNumber()).isEqualTo(0);
-        assertThat(laterSnowflake.getSequenceNumber()).isEqualTo(0);
+        assertThat(earlierSnowflake.getSequenceNumber()).isZero();
+        assertThat(laterSnowflake.getSequenceNumber()).isZero();
     }
 
     @Test
@@ -68,20 +68,19 @@ class SnowflakeIdGeneratorTest {
         int count = 1000;
         Set<Snowflake> uniqueSnowflakes = getUniqueSnowflakes(
                 new SnowflakeIdGenerator(new InstantTimestampGenerator(), mockEnvironment), count);
-        assertThat(uniqueSnowflakes.size()).isEqualTo(count);
+        assertThat(uniqueSnowflakes).hasSize(count);
     }
 
     @Test
-    void constructor_WhenSnowflakeMachineIdIsNotValid_ShouldThrowException() throws Exception {
+    void constructor_WhenSnowflakeMachineIdIsNotValid_ShouldThrowException() {
+        MockEnvironment env = new MockEnvironment();
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> {
-            MockEnvironment mockEnvironment = new MockEnvironment();
-            new SnowflakeIdGenerator(timestampGenerator, mockEnvironment);
+            new SnowflakeIdGenerator(timestampGenerator, env);
         });
 
+        env.setProperty("snowflake.machine_id", "text");
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> {
-            MockEnvironment mockEnvironment = new MockEnvironment();
-            mockEnvironment.setProperty("snowflake.machine_id", "text");
-            new SnowflakeIdGenerator(timestampGenerator, mockEnvironment);
+            new SnowflakeIdGenerator(timestampGenerator, env);
         });
     }
 

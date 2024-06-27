@@ -41,9 +41,7 @@ public class SnowflakeIdGenerator {
 
     private long getMachineId() {
         try {
-            String str = environment.getProperty(SNOWFLAKE_MACHINE_ID_PROPERTY);
-            long machineId = Long.parseLong(environment.getProperty(SNOWFLAKE_MACHINE_ID_PROPERTY));
-            return machineId;
+            return Long.parseLong(environment.getProperty(SNOWFLAKE_MACHINE_ID_PROPERTY));
         } catch (Exception e) {
             throw new IllegalStateException(
                     String.format("%s property is not defined or is not a valid long", SNOWFLAKE_MACHINE_ID_PROPERTY));
