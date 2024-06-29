@@ -6,17 +6,39 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "servers")
 public class Server implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
     private UUID id;
     private String name;
     private Instant createdAt;
     private String pictureUrl;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
     private User owner;
+
+    @ManyToMany
+    @JoinTable(name = "servers_users", joinColumns = @JoinColumn(name = "server_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "servers_admins", joinColumns = @JoinColumn(name = "server_id"), inverseJoinColumns = @JoinColumn(name = "admin_id"))
     private Set<User> admins = new HashSet<>();
+
+    @OneToMany(mappedBy = "server")
     private Set<Room> rooms = new HashSet<>();
 
     public Server() {
@@ -67,10 +89,6 @@ public class Server implements Serializable {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
     public boolean addUser(User user) {
         return users.add(user);
     }
@@ -83,10 +101,6 @@ public class Server implements Serializable {
         return admins;
     }
 
-    public void setAdmins(Set<User> admins) {
-        this.admins = admins;
-    }
-
     public boolean addAdmin(User user) {
         return admins.add(user);
     }
@@ -97,10 +111,6 @@ public class Server implements Serializable {
 
     public Set<Room> getRooms() {
         return rooms;
-    }
-
-    public void setRooms(Set<Room> rooms) {
-        this.rooms = rooms;
     }
 
     public boolean addRoom(Room room) {

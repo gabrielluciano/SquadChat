@@ -6,13 +6,30 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "rooms")
 public class Room implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
     private UUID id;
     private String name;
     private Instant createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "server_id")
+    private Server server;
+
+    @ManyToMany
+    @JoinTable(name = "rooms_users", joinColumns = @JoinColumn(name = "room_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users = new HashSet<>();
 
     public Room() {
@@ -43,12 +60,16 @@ public class Room implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Server getServer() {
+        return server;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setServer(Server server) {
+        this.server = server;
+    }
+
+    public Set<User> getUsers() {
+        return users;
     }
 
     public boolean addUser(User user) {

@@ -3,15 +3,34 @@ package com.gabrielluciano.squadchat.model.entities;
 import java.io.Serializable;
 
 import com.gabrielluciano.squadchat.model.snowflake.Snowflake;
+import com.gabrielluciano.squadchat.model.snowflake.SnowflakeConverter;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "messages")
 public class Message implements Comparable<Message>, Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @Convert(converter = SnowflakeConverter.class)
+    @Column(columnDefinition = "bigint")
     private Snowflake id;
     private String content;
     private Boolean edited;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User author;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
     private Room room;
 
     public Message() {

@@ -6,15 +6,26 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
     private UUID id;
+    @Column(unique = true)
     private String username;
     private String password;
     private Instant createdAt;
     private String avatarUrl;
 
+    @ManyToMany(mappedBy = "users")
     private Set<Server> servers = new HashSet<>();
 
     public User() {
@@ -63,10 +74,6 @@ public class User implements Serializable {
 
     public Set<Server> getServers() {
         return servers;
-    }
-
-    public void setServers(Set<Server> servers) {
-        this.servers = servers;
     }
 
     @Override
