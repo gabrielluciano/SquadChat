@@ -1,0 +1,26 @@
+name: squadchat
+
+services:
+  database:
+    image: postgres:16.3
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - db:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4:8.9
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@squadchat.com
+      PGADMIN_DEFAULT_PASSWORD: 12345
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+volumes:
+  db:
+  pgadmin:
