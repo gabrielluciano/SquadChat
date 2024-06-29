@@ -3,10 +3,8 @@ package com.gabrielluciano.squadchat.model.entities;
 import java.io.Serializable;
 
 import com.gabrielluciano.squadchat.model.snowflake.Snowflake;
-import com.gabrielluciano.squadchat.model.snowflake.SnowflakeConverter;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -19,9 +17,8 @@ public class Message implements Comparable<Message>, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Convert(converter = SnowflakeConverter.class)
     @Column(columnDefinition = "bigint")
-    private Snowflake id;
+    private Long id;
     private String content;
     private Boolean edited;
 
@@ -36,12 +33,20 @@ public class Message implements Comparable<Message>, Serializable {
     public Message() {
     }
 
-    public Snowflake getId() {
-        return id;
+    public Message(Snowflake snowflake, String content, Boolean edited, User author, Room room) {
+        this.id = snowflake.getRawId();
+        this.content = content;
+        this.edited = edited;
+        this.author = author;
+        this.room = room;
     }
 
-    public void setId(Snowflake id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getContent() {
