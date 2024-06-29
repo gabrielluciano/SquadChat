@@ -3,9 +3,11 @@ package com.gabrielluciano.squadchat.model.snowflake;
 import java.time.Instant;
 
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 import com.gabrielluciano.squadchat.model.time.TimestampGenerator;
 
+@Component
 public class SnowflakeIdGenerator {
 
     private static final String SNOWFLAKE_MACHINE_ID_PROPERTY = "snowflake.machine_id";
