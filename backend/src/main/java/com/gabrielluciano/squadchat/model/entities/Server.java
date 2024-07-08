@@ -45,6 +45,14 @@ public class Server implements Serializable {
         id = UUID.randomUUID();
     }
 
+    public Server(UUID id, String name, Instant createdAt, String pictureUrl, User owner) {
+        this.id = id;
+        this.name = name;
+        this.createdAt = createdAt;
+        this.pictureUrl = pictureUrl;
+        this.owner = owner;
+    }
+
     public UUID getId() {
         return id;
     }

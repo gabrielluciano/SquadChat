@@ -25,7 +25,7 @@ public class Room implements Serializable {
     private Instant createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "server_id")
+    @JoinColumn(name = "server_id", nullable = false)
     private Server server;
 
     @ManyToMany
@@ -34,6 +34,13 @@ public class Room implements Serializable {
 
     public Room() {
         id = UUID.randomUUID();
+    }
+
+    public Room(UUID id, String name, Instant createdAt, Server server) {
+        this.id = id;
+        this.name = name;
+        this.createdAt = createdAt;
+        this.server = server;
     }
 
     public UUID getId() {
