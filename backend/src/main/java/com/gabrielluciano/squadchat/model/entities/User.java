@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,6 +23,7 @@ public class User implements Serializable {
     private UUID id;
     @Column(unique = true)
     private String username;
+    @JsonIgnore
     private String password;
     private Instant createdAt;
     private String avatarUrl;

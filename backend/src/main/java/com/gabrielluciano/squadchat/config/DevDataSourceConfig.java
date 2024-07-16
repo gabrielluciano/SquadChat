@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.gabrielluciano.squadchat.model.entities.Message;
@@ -27,26 +28,29 @@ public class DevDataSourceConfig implements CommandLineRunner {
     private final UserRepository userRepository;
     private final ServerRepository serverRepository;
     private final RoomRepository roomRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public DevDataSourceConfig(
             SnowflakeIdGenerator generator,
             MessageRepository messageRepository,
             UserRepository userRepository,
             ServerRepository serverRepository,
-            RoomRepository roomRepository) {
+            RoomRepository roomRepository,
+            PasswordEncoder passwordEncoder) {
         this.generator = generator;
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
         this.serverRepository = serverRepository;
         this.roomRepository = roomRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        User user1 = new User(UUID.randomUUID(), "john_doe", "123", Instant.now(), "");
-        User user2 = new User(UUID.randomUUID(), "jane_smith", "123", Instant.now(), "");
-        User user3 = new User(UUID.randomUUID(), "michael_brown", "123", Instant.now(), "");
-        User user4 = new User(UUID.randomUUID(), "emily_white", "123", Instant.now(), "");
+        User user1 = new User(UUID.randomUUID(), "john_doe", passwordEncoder.encode("123"), Instant.now(), "");
+        User user2 = new User(UUID.randomUUID(), "jane_smith", passwordEncoder.encode("123"), Instant.now(), "");
+        User user3 = new User(UUID.randomUUID(), "michael_brown", passwordEncoder.encode("123"), Instant.now(), "");
+        User user4 = new User(UUID.randomUUID(), "emily_white", passwordEncoder.encode("123"), Instant.now(), "");
 
         userRepository.saveAll(List.of(user1, user2, user3, user4));
 
