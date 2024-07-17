@@ -16,10 +16,6 @@ public class UserCreateRequest implements Serializable {
         this.password = password;
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
     public String getUsername() {
         return username;
     }

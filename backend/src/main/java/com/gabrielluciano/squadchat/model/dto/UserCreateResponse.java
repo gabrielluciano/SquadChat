@@ -27,10 +27,6 @@ public class UserCreateResponse {
         return new UserCreateResponse(user.getId(), user.getUsername(), user.getCreatedAt(), user.getAvatarUrl());
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
     public UUID getId() {
         return id;
     }
