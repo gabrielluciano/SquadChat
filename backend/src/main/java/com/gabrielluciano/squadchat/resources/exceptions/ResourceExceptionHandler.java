@@ -1,6 +1,7 @@
 package com.gabrielluciano.squadchat.resources.exceptions;
 
 import com.gabrielluciano.squadchat.model.exceptions.DuplicatedResourceException;
+import com.gabrielluciano.squadchat.model.exceptions.InvalidCredentialsException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,18 @@ public class ResourceExceptionHandler {
         errorResponse.setStatus(HttpStatus.CONFLICT.value());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorResponse> handleInvalidCredentialsException(InvalidCredentialsException ex, HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setError("Invalid Credentials");
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setPath(request.getRequestURI());
+        errorResponse.setTimestamp(Instant.now());
+        errorResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 }
