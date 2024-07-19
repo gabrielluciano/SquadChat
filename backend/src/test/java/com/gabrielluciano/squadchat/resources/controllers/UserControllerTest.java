@@ -1,5 +1,6 @@
 package com.gabrielluciano.squadchat.resources.controllers;
 
+import static com.gabrielluciano.squadchat.util.TestUtils.asJsonString;
 import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -70,9 +71,5 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.path").value("/api/v1/users/new"))
                 .andExpect(jsonPath("$.timestamp").exists())
                 .andExpect(jsonPath("$.status").value(HttpStatus.CONFLICT.value()));
-    }
-
-    private static String asJsonString(final Object object) throws Exception {
-        return new ObjectMapper().writeValueAsString(object);
     }
 }
