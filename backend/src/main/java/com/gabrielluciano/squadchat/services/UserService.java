@@ -11,6 +11,7 @@ import com.gabrielluciano.squadchat.security.JWTUtil;
 import com.gabrielluciano.squadchat.security.SecurityUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -29,6 +30,7 @@ public class UserService {
         this.jwtUtil = jwtUtil;
     }
 
+    @Transactional
     public UserCreateResponse createUser(UserCreateRequest userCreateRequest) {
         Optional<User> userFromDb = repository.findByUsername(userCreateRequest.getUsername());
         if (userFromDb.isPresent())
