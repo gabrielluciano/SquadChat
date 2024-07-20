@@ -2,7 +2,7 @@ package com.gabrielluciano.squadchat.services;
 
 import com.gabrielluciano.squadchat.model.dto.LoginRequest;
 import com.gabrielluciano.squadchat.model.dto.UserCreateRequest;
-import com.gabrielluciano.squadchat.model.dto.UserCreateResponse;
+import com.gabrielluciano.squadchat.model.dto.UserResponse;
 import com.gabrielluciano.squadchat.model.entities.User;
 import com.gabrielluciano.squadchat.model.exceptions.DuplicatedResourceException;
 import com.gabrielluciano.squadchat.model.exceptions.InvalidCredentialsException;
@@ -31,7 +31,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserCreateResponse createUser(UserCreateRequest userCreateRequest) {
+    public UserResponse createUser(UserCreateRequest userCreateRequest) {
         Optional<User> userFromDb = repository.findByUsername(userCreateRequest.getUsername());
         if (userFromDb.isPresent())
             throw new DuplicatedResourceException("Username already exists");
@@ -39,7 +39,7 @@ public class UserService {
         User userToSave = new User(UUID.randomUUID(), userCreateRequest.getUsername(),
                 passwordEncoder.encode(userCreateRequest.getPassword()), Instant.now(), null);
 
-        return UserCreateResponse.fromUser(repository.save(userToSave));
+        return UserResponse.fromUser(repository.save(userToSave));
     }
 
     public String login(LoginRequest loginRequest) {

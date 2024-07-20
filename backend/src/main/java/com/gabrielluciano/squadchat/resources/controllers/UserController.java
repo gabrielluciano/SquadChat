@@ -2,7 +2,7 @@ package com.gabrielluciano.squadchat.resources.controllers;
 
 import com.gabrielluciano.squadchat.model.dto.LoginRequest;
 import com.gabrielluciano.squadchat.model.dto.UserCreateRequest;
-import com.gabrielluciano.squadchat.model.dto.UserCreateResponse;
+import com.gabrielluciano.squadchat.model.dto.UserResponse;
 import com.gabrielluciano.squadchat.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping("new")
-    public ResponseEntity<UserCreateResponse> createUser(@RequestBody UserCreateRequest userCreateRequest) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserCreateRequest userCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createUser(userCreateRequest));
     }
 

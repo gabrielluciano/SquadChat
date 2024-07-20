@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.gabrielluciano.squadchat.model.entities.User;
 
-public class UserCreateResponse {
+public class UserResponse {
     private static final long serialVersionUID = 1L;
 
     private UUID id;
@@ -13,18 +13,18 @@ public class UserCreateResponse {
     private Instant createdAt;
     private String avatarUrl;
 
-    public UserCreateResponse() {
+    public UserResponse() {
     }
 
-    public UserCreateResponse(UUID id, String username, Instant createdAt, String avatarUrl) {
+    public UserResponse(UUID id, String username, Instant createdAt, String avatarUrl) {
         this.id = id;
         this.username = username;
         this.createdAt = createdAt;
         this.avatarUrl = avatarUrl;
     }
 
-    public static UserCreateResponse fromUser(User user) {
-        return new UserCreateResponse(user.getId(), user.getUsername(), user.getCreatedAt(), user.getAvatarUrl());
+    public static UserResponse fromUser(User user) {
+        return new UserResponse(user.getId(), user.getUsername(), user.getCreatedAt(), user.getAvatarUrl());
     }
 
     public UUID getId() {
