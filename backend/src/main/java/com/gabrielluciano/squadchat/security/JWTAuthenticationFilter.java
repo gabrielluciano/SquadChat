@@ -7,6 +7,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +36,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             String username = decodedJWT.getClaim("username").asString();
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            JWTAuthentication authentication = JWTAuthentication.authenticated((SecurityUser) userDetails);
+            UsernamePasswordAuthenticationToken authentication = UsernamePasswordAuthenticationToken
+                    .authenticated(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (JWTAuthenticationException ignore) {
         } finally {
